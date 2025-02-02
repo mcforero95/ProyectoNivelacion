@@ -1,0 +1,32 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #e3f2fd; /* Azul claro */
+}
+
+h1, h2, h3 {
+  color: #0d47a1; /* Azul oscuro */
+}
+
+button {
+  background-color: #1976d2; /* Azul intermedio */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1565c0; /* Azul más oscuro */
+}
+
+.navbar {
+  background-color: #0d47a1; /* Azul oscuro */
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
