@@ -147,6 +147,7 @@ frontend/
 Una vez ejecutados los contenedores, accede a:
 - **Frontend:** [http://localhost:5173](http://localhost:5173)
 - **API Backend:** [http://localhost:8080](http://localhost:8080)
+- **URL AWS EC2 (Academy Learned Lab):** [http://54.175.143.11:5173/](http://54.175.143.11:5173/) 
 
 ---
 
