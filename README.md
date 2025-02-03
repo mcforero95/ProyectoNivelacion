@@ -20,18 +20,19 @@ Si no tienes Docker y Docker Compose instalados, puedes descargarlos e instalarl
 - [Guía de instalación de Docker](https://docs.docker.com/get-docker/)
 
 ### 🏗 **Construcción de Imágenes**
-Ejecuta los siguientes comandos en la raíz del proyecto para construir las imágenes de Docker:
+Ejecuta los siguientes comandos en la raíz del proyecto para construir las imágenes de Docker deben ser dos terminales distintas:
 
 ```bash
 # Construir imagen del backend
 docker build -t gestion-tareas-backend -f Dockerfile .
 
-# Construir imagen del frontend
-docker build -t gestion-tareas-frontend -f frontend/Dockerfile frontend
+# Construir imagen del frontend para ello ingresar ala carpeta frontend
+cd frontend
+docker build -t gestion-tareas-frontend -f Dockerfile .
 ```
 
 ### 🌐 **Crear y conectar la red Docker**
-Para que el frontend pueda comunicarse con el backend, es necesario crear una red personalizada:
+Para que el frontend pueda comunicarse con el backend, es necesario crear una red personalizada desde la carpeta frontend ejecuta:
 
 ```bash
 docker network create gestion-tareas-network
