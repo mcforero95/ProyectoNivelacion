@@ -8,46 +8,83 @@ La aplicación está dividida en dos partes:
 
 ---
 
-## 1️⃣ **Backend**
+## 1️⃣ **Ejecutar con Docker**
 
 ### 📌 **Requisitos**
-Antes de ejecutar el backend, asegúrate de tener instalado:
-- Python 3.10 o superior
-- `pip` y `virtualenv`
-- `uvicorn` (para ejecutar FastAPI)
-- `SQLite` (se usa por defecto en este proyecto)
+Antes de ejecutar la aplicación, asegúrate de tener instalado:
+- **Docker**
+- **Docker Compose**
 
-## Instalación
+Si no tienes Docker y Docker Compose instalados, puedes descargarlos e instalarlos desde:
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [Guía de instalación de Docker](https://docs.docker.com/get-docker/)
 
-Clona el repositorio:
+### 🏗 **Construcción de Imágenes**
+Ejecuta los siguientes comandos en la raíz del proyecto para construir las imágenes de Docker:
 
-   ```bash
-   git clone https://github.com/mcforero95/ProyectoNivelacion.git
-   cd ProyectoNivelacion
-
-### 📦 **Instalación**
 ```bash
-# Crear un entorno virtual (opcional pero recomendado)
-python -m venv venv
-source venv/bin/activate  # Para Mac/Linux
-venv\Scripts\activate     # Para Windows
+# Construir imagen del backend
+docker build -t gestion-tareas-backend -f Dockerfile .
 
-# Instalar dependencias
-pip install -r requirements.txt
+# Construir imagen del frontend
+docker build -t gestion-tareas-frontend -f frontend/Dockerfile frontend
 ```
 
-### 🚀 **Ejecutar el backend**
-```bash
-uvicorn main:app --reload
-```
-La API estará disponible en: [http://127.0.0.1:8080](http://127.0.0.1:8080)
+### 🌐 **Crear y conectar la red Docker**
+Para que el frontend pueda comunicarse con el backend, es necesario crear una red personalizada:
 
-### 📄 **Documentación de la API**
+```bash
+docker network create gestion-tareas-network
+```
+
+### 🚀 **Ejecutar los Contenedores**
+Ejecuta los siguientes comandos para iniciar los contenedores y conectarlos a la red:
+
+```bash
+# Ejecutar Backend en la red
+docker run -d --network gestion-tareas-network -p 8080:8080 --name backend-container gestion-tareas-backend
+
+# Ejecutar Frontend en la red
+docker run -d --network gestion-tareas-network -p 5173:5173 --name frontend-container gestion-tareas-frontend
+```
+
+### 🔍 **Verificar los Contenedores en Ejecución**
+```bash
+docker ps
+```
+
+Si necesitas ver los logs:
+```bash
+docker logs backend-container
+docker logs frontend-container
+```
+
+### 🛑 **Detener y Eliminar Contenedores**
+Si deseas detener los contenedores:
+```bash
+docker stop backend-container frontend-container
+```
+Para eliminarlos después de detenerlos:
+```bash
+docker rm backend-container frontend-container
+```
+Si deseas eliminar las imágenes:
+```bash
+docker rmi gestion-tareas-backend gestion-tareas-frontend
+```
+
+---
+
+## 📄 **Documentación de la API**
 FastAPI genera documentación automáticamente en:
 - **Swagger:** [http://127.0.0.1:8080/docs](http://127.0.0.1:8080/docs)
 - **Redoc:** [http://127.0.0.1:8080/redoc](http://127.0.0.1:8080/redoc)
 
-### 📂 **Estructura del backend**
+---
+
+## 📂 **Estructura del Proyecto**
+
+### **Backend**
 ```
 backend/
 ├── main.py              # Archivo principal de FastAPI
@@ -71,29 +108,7 @@ backend/
 ├── .gitignore           # Ignorar archivos en el repositorio Git
 ```
 
----
-
-## 2️⃣ **Frontend**
-
-### 📌 **Requisitos**
-Antes de ejecutar el frontend, asegúrate de tener instalado:
-- Node.js 16+
-- npm o yarn
-
-### 📦 **Instalación**
-```bash
-# Instalar dependencias
-cd frontend
-npm install
-```
-
-### 🚀 **Ejecutar el frontend**
-```bash
-npm run dev
-```
-La aplicación estará disponible en: [http://localhost:5173](http://localhost:5173)
-
-### 📂 **Estructura del frontend**
+### **Frontend**
 ```
 frontend/
 ├── src/
@@ -124,60 +139,19 @@ frontend/
 ├── .gitignore            # Ignorar archivos en el repositorio Git
 ```
 
-### 🔗 **Conexión con el Backend**
-El archivo `src/utils/api.js` maneja la comunicación con el backend. Modifica la variable `API_BASE_URL` si el backend está desplegado en otro servidor.
+---
+
+## 🔗 **URL para acceder a la aplicación**
+
+Una vez ejecutados los contenedores, accede a:
+- **Frontend:** [http://localhost:5173](http://localhost:5173)
+- **API Backend:** [http://localhost:8080](http://localhost:8080)
 
 ---
 
-## 3️⃣ **Archivos Docker**
-### 🐳 **Dockerfile Backend**
-```dockerfile
-FROM python:3.10
-WORKDIR /app
-COPY . .
-RUN pip install --no-cache-dir -r requirements.txt
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
-```
-
-### 🐳 **Dockerfile Frontend**
-```dockerfile
-FROM node:16
-WORKDIR /app
-COPY package.json .
-RUN npm install
-COPY . .
-CMD ["npm", "run", "dev"]
-```
-
----
-
-## 4️⃣ **Archivos de Ignorar**
-### 📂 **.gitignore**
-```plaintext
-venv/
-__pycache__/
-node_modules/
-dist/
-build/
-.env
-db.sqlite3
-```
-
-### 📂 **.dockerignore**
-```plaintext
-venv/
-__pycache__/
-node_modules/
-dist/
-build/
-.env
-db.sqlite3
-.git
-```
-
----
-
-## 5️⃣ **Autores**
+## 6️⃣ **Autores**
 - **Desarrollador:** Jhon Mario Forero
 - **Universidad:** Universidad de los Andes
 - **Curso:** Desarrollo de Soluciones Cloud
+
+ 
