@@ -1,6 +1,20 @@
-FROM node:16
+# Imagen base de Node.js
+FROM node:18
+
+# Establecer el directorio de trabajo dentro del contenedor
 WORKDIR /app
-COPY package.json .
-RUN npm install
+
+# Copiar archivos del frontend al contenedor
 COPY . .
-CMD ["npm", "run", "dev"]
+
+# Instalar dependencias
+RUN npm install
+
+# Construir la aplicación (si es necesario)
+RUN npm run build
+
+# Exponer el puerto de React
+EXPOSE 5173
+
+# Ejecutar la aplicación
+CMD ["npm", "start"]
