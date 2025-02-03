@@ -11,7 +11,7 @@ const RegisterForm = () => {
     try {
       await authAPI.register(form); // Llama al endpoint de registro
       alert('Usuario registrado exitosamente');
-      navigate('/login'); // Redirige al login tras el registro
+      navigate('/'); // Redirige al home
     } catch (error) {
       alert('Error al registrar usuario');
     }
