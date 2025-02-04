@@ -60,11 +60,12 @@ app = FastAPI()
 # Configuración de CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://frontend-container:5173"],  # Solo permite el contenedor del frontend
+    allow_origin_regex=".*",  # Permitir todas las IPs y dominios
     allow_credentials=True,
     allow_methods=["*"],  # Permitir todos los métodos HTTP
     allow_headers=["*"],  # Permitir todos los encabezados
 )
+
 
 # Crear las tablas en la base de datos si no existen
 Base.metadata.create_all(bind=engine)
