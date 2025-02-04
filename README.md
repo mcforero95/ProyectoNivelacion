@@ -37,6 +37,15 @@ Para que el frontend pueda comunicarse con el backend, es necesario crear una re
 ```bash
 docker network create gestion-tareas-network
 ```
+Verificar el estado de la red creada:
+```bash
+docker network ls
+```
+Verificar los contenedores conectados a la red:
+```bash
+docker network inspect gestion-tareas-network
+
+```
 
 ### 🚀 **Ejecutar los Contenedores**
 Ejecuta los siguientes comandos para iniciar los contenedores y conectarlos a la red:
@@ -73,7 +82,6 @@ Si deseas eliminar las imágenes:
 ```bash
 docker rmi gestion-tareas-backend gestion-tareas-frontend
 ```
-
 ---
 
 ## 📄 **Documentación de la API**
